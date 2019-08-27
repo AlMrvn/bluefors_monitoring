@@ -1,3 +1,4 @@
+#!/usr/bin/env python 
 from tkinter import Tk, Label, Button, StringVar, Entry
 import requests
 import json
@@ -31,7 +32,7 @@ class bluefors_monitor:
 
         self.set_temp = {'4K': 3.5, 'still': 0.95, 'MXC': 0.0095}
         self.web_hook  = 'https://hooks.slack.com/services/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'
-        self.path = 'C:/BlueFors/logs'
+        self.path = 'C:/BlueFors/logs/'
         self.tol=.1
 
         # closing the windows
