@@ -7,13 +7,13 @@ import datetime
 
 web_hook_url = 'https://hooks.slack.com/services/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'
 
-path = '/Users/morvan/Documents/log_fridge_crash/'
+path = '//FLAMINGO/Flamingo/Fridges/Snowball/BlueFors/logs/'
 
 
 def read_last_log(day, channels = [2, 5, 6], plotting=False):
     """ Read the log file of Blue fors. Make a nice plot of it."""
     
-    log_files = ['CH{0} T {1}.log'.format(ch, day.strftime('%Y-%m-%d')[2:]) for ch in channels]
+    log_files = ['{1}/CH{0} T {1}.log'.format(ch, day.strftime('%Y-%m-%d')[2:]) for ch in channels]
     labels = ['4K', 'Still', 'MCX']
     my_day = day
     log_data = {}
