@@ -31,7 +31,7 @@ class bluefors_monitor:
         master.title("BlueFors monitor")
 
         self.set_temp = {'4K': 3.5, 'still': 0.95, 'MXC': 0.0095}
-        self.web_hook  = 'https://hooks.slack.com/services/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'
+        self.web_hook  = 'https://hooks.slack.com/services/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'
         self.path = 'C:/BlueFors/logs/'
         self.tol=.1
 
@@ -107,13 +107,13 @@ class bluefors_monitor:
                         "attachments": [
                             {
                             "color": "danger",
-                            "pretext": "Something is wrong with BigFridge! Please check!",
+                            "pretext": "@channel Something is wrong with BigFridge! Please check!",
                             "text": "4K plate: {0:.02f} K \n Still: {1:.02f} K \n MXC: {2:.04f} K".format(log_data['4K'], log_data['still'], log_data['MXC']),
                             }
                             ]
                         }
             requests.post(self.web_hook, data=json.dumps(slack_msg))
-        root.after(60*1000, self.monitoring)
+        root.after(15*60*1000, self.monitoring)
 
     def start_monitoring(self):
         #self.label.configure(text="monitoring now")
