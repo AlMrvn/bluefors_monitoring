@@ -1,1 +1,7 @@
 *.log
+/log/
+/Untitled.ipynb
+/dist/
+/build/
+/.ipynb_checkpoints/
+/build/
