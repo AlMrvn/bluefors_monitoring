@@ -26,6 +26,11 @@ def calculate_noise_temperature(temperature, attenuation):
 
 if __name__ == "__main__":
 
+    # releveant noise temperature
+    from scipy import constants as c
+    freq = 6e9
+    print(f'6 GHz temperature: {c.h*freq/c.k*1e3:0.02f} mK')
+
     # temperature stages
     temperature = [50, 4, 1, 0.1, 0.001]
 
