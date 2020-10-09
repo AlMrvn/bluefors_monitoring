@@ -5,3 +5,15 @@
 /build/
 /.ipynb_checkpoints/
 /build/
+20-06-06.zip
+.DS_Store
+2019-10-12_Blizzard_cooldown.pdf
+blueFors_monitoring.spec
+temperature_monitoring.ipynb
+.idea/bluefors_monitoring.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/inspectionProfiles/profiles_settings.xml
+__pycache__/blueFors_monitoring.cpython-38.pyc
