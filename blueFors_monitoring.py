@@ -5,6 +5,7 @@ import json
 import time
 import datetime
 import logging
+import json
 logger = logging.getLogger('bluefors')
 
 
@@ -30,14 +31,14 @@ class BlueforsMonitor:
         "Send a notification on slack if something bad happen",
     ]
 
-    def __init__(self, master):
+    def __init__(self, master, config):
         self.daily_update = True
         self.master = master
         master.title("BlueFors monitor")
 
-        self.set_temp = {'4K': 3.4, 'still': 0.99, 'MXC': 0.0098}
-        self.web_hook = 'https://hooks.slack.com/services/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'
-        self.path = 'C:/BlueFors/logs/'
+        self.set_temp = config["thresholds"] 
+        self.web_hook = config["hook"] 
+        self.path = config["path"] 
         self.tol = .1
 
         # closing the windows
@@ -117,8 +118,11 @@ class BlueforsMonitor:
             # fetch the data
             log_data = read_last_log(self.today, self.path)
 
+            # Temperatures:
+            logging.info("4K plate: {0:.02f} K \n Still: {1:.02f} K \n MXC: {2:.04f} K".format(log_data['4K'], log_data['still'], log_data['MXC']),)
+
             # convert the data into a boolean if the state is good or not
-            all_is_good = [ abs(log_data[key]-self.set_temp[key])/self.set_temp[key]< self.tol for key in log_data.keys() ]
+            all_is_good = [ (log_data[key]-self.set_temp[key])/self.set_temp[key]< self.tol for key in log_data.keys() ]
 
             # logging into the logger
             if all(all_is_good):
@@ -175,8 +179,16 @@ class BlueforsMonitor:
     def set_tol(self):
         self.tol = float(self.tol_input.get())/100.
 
-root = Tk()
-my_gui = BlueforsMonitor(root)
-root.after(0, my_gui.start_monitoring)
-root.after(60, my_gui.monitoring)
-root.mainloop()
+if __name__ == "__main__":
+
+    logging.basicConfig(level=logging.DEBUG)
+    with open('config.json') as f:
+        config = json.load(f)
+
+    print("Intialazing monitoring")
+
+    root = Tk()
+    my_gui = BlueforsMonitor(root, config)
+    root.after(0, my_gui.start_monitoring)
+    root.after(60, my_gui.monitoring)
+    root.mainloop()
