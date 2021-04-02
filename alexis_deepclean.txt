@@ -1,0 +1,82 @@
+C deepclean of the mixture
+C v1.0 (LD/SD)
+
+START
+
+STATE 1
+SET_STATE 2
+
+STATE 2 Close critical valves
+C Make sure critical valves are closed
+SET var1=time
+OFF v15
+OFF v17
+OFF v18
+OFF v3
+OFF v11
+OFF v12
+OFF v13
+OFF v8
+OFF turbo1
+SET_STATE 3
+WAIT 5
+
+STATE 3 Open some valves
+OFF v7
+OFF v9
+OFF v10
+ON scroll1
+ON v3
+ON v2
+ON v13
+SET_STATE 4
+WAIT 10
+
+STATE 4 Cycle of expansion in the trap and in the still line
+IF p2<450
+SET_STATE 5
+ELSE
+SET_STATE 7
+ENDIF
+
+STATE 5 expand in the trap 
+OFF v7
+WAIT 1
+ON v9
+SET_STATE 6
+WAIT 10
+
+STATE 6 expand in the still
+OFF v9
+WAIT 1
+ON v7
+SET_STATE 4
+WAIT 10
+
+STATE 7 Pumping back
+OFF v9
+ON v7
+ON v3
+ON v2
+ON v10
+SET_STATE 8
+WAIT 240
+
+STATE 8 we do 8 cycles with each cycle being 10min
+IF time - var1<4800
+SET_STATE 3
+ELSE
+SET_STATE 9
+ENDIF
+
+STATE 9 Final pump of the trap with the turbo
+ON turbo1
+SET_STATE 10
+
+STATE 10
+STOP
+
+END
+
+
+C v1.0 Initial script without end
